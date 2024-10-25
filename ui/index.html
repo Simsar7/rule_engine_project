@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for better visibility */
+        #astOutput {
+            white-space: pre-wrap; /* Preserve whitespace for JSON formatting */
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rule Engine</h1>
+    
+    <form id="ruleForm">
+        <label for="rule">Enter Rule:</label>
+        <input type="text" id="rule" name="rule" placeholder="e.g., age > 30 AND department = 'Sales'" required>
+        <button type="submit">Create Rule</button>
+    </form>
+
+    <div id="astOutput"></div> <!-- Div to display AST representation -->
+
+    <form id="evaluateForm">
+        <label for="data">Enter Data:</label>
+        <input type="text" id="data" name="data" placeholder="e.g., {'age': 35, 'department': 'Sales'}" required>
+        <button type="submit">Evaluate Rule</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        // JavaScript to handle form submissions
+        document.getElementById('ruleForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            const ruleInput = document.getElementById('rule').value;
+
+            fetch('/create_rule', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ rule: ruleInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    // Display the AST representation
+                    const astOutput = JSON.stringify(data.ast, null, 2); // Pretty-print JSON
+                    document.getElementById('astOutput').textContent = astOutput;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('evaluateForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            const dataInput = document.getElementById('data').value;
+
+            try {
+                const parsedData = JSON.parse(dataInput);
+                const ruleId = 0; // Assuming you want to evaluate the first rule
+
+                fetch('/evaluate_rule', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ rule_id: ruleId, data: parsedData })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // Display the result of evaluation
+                        document.getElementById('result').textContent = `Evaluation Result: ${data.result ? 'Eligible' : 'Not Eligible'}`;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } catch (e) {
+                alert('Invalid JSON data format. Please check your input.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+    margin: 0;
+    padding: 20px;
+    transition: background 0.5s ease; /* Smooth transition for background */
+}
+
+h1 {
+    text-align: center;
+    color: #2C3E50;
+    margin-bottom: 20px;
+}
+
+form {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s; /* Adding hover effect */
+}
+
+form:hover {
+    transform: translateY(-5px); /* Slightly lift the form on hover */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #34495E; /* Darker color for better readability */
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #BDC3C7;
+    border-radius: 4px;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus {
+    border: 1px solid #3498DB; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.3s; /* Adding transition */
+}
+
+button:hover {
+    background-color: #4cae4c;
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.5em; /* Increased font size for emphasis */
+    text-align: center;
+    color: #2C3E50; /* Changed to a darker shade for better readability */
+    padding: 20px; /* Increased padding for better spacing */
+    background-color: rgba(39, 174, 96, 0.1); /* Light green background for output */
+    border-radius: 8px; /* More rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow for more depth */
+    border: 2px solid #27AE60; /* Thicker border for emphasis */
+    transition: background 0.3s, transform 0.3s; /* Smooth transition for background and scaling */
+    font-weight: bold; /* Make the result text bold */
+    animation: fadeIn 0.5s ease-in-out; /* Added animation on display */
+}
+
+#result:hover {
+    background-color: rgba(39, 174, 96, 0.15); /* Slightly darker on hover for feedback */
+    transform: scale(1.02); /* Slightly scale up on hover for a pop effect */
+}
+
+/* Keyframes for fadeIn animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Start from transparent */
+        transform: translateY(10px); /* Start slightly below */
+    }
+    to {
+        opacity: 1; /* Fade in to fully visible */
+        transform: translateY(0); /* Move to original position */
+    }
+}
+
+/* Add some media queries for responsiveness */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    form {
+        max-width: 90%;
+    }
+}
